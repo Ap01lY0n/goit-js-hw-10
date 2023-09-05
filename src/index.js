@@ -5,8 +5,6 @@ const elements = {
   error: document.querySelector('.error'),
   catInfo: document.querySelector('.cat-info'),
 };
-console.log(elements.error.classList.value === 'error');
-console.log(!elements.error.classList.value === 'error');
 fetchBreeds().then(arr => {
   return addcats(arr);
 });
