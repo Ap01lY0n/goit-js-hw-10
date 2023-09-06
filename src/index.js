@@ -1,4 +1,13 @@
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
+import Notiflix from 'notiflix';
+
+Notiflix.Notify.init({
+  position: 'left-top',
+  width: '800px',
+  fontSize: '20px',
+  closeButton: true,
+  distance: '40px',
+});
 
 const elements = {
   selectForm: document.querySelector('.breed-select'),
@@ -9,6 +18,19 @@ const elements = {
 fetchBreeds().then(arr => {
   return addcats(arr);
 });
+
+fetchBreeds()
+  .then(data => {
+    elements.select.classList.remove('js-visible');
+    elements.loader.classList.add('js-visible');
+    elements.select.innerHTML = createList(data);
+  })
+  .catch(error => {
+    elements.select.classList.add('js-visible');
+    Notiflix.Notify.failure(`${elements.error.textContent}`);
+  });
+
+
 function addcats(arr) {
   const markup = arr
     .map(({ id, name }) => `<option value="${id}">${name}</option>`)
@@ -51,11 +73,8 @@ function e(evt) {
         elements.catInfo.insertAdjacentHTML('beforeend', el);
       }
     })
-    .catch(data => {
-      elements.loader.classList.toggle('change-status');
-      elements.error.classList.toggle('error');
-      console.log('3', data);
+    .catch(error => {
+      console.log(error.message);
+      Notiflix.Notify.failure(`${elements.error.textContent}`);
     });
 }
-
-
