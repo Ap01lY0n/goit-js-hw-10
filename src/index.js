@@ -1,4 +1,5 @@
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
+
 const elements = {
   selectForm: document.querySelector('.breed-select'),
   loader: document.querySelector('.loader'),
@@ -56,3 +57,5 @@ function e(evt) {
       console.log('3', data);
     });
 }
+
+
